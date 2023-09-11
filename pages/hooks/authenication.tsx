@@ -1,12 +1,14 @@
-import {
+import React, {
   ReactNode,
   createContext,
   useContext,
   useEffect,
   useState,
 } from "react";
-import { client, account } from "@/utils/appwrite";
-import { ID } from "appwrite";
+import { account } from "@/utils/appwrite";
+import { AppwriteException, ID } from "appwrite";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css"; // Import Toastify CSS
 
 type AuthProviderProps = {
   children: ReactNode;
@@ -20,7 +22,8 @@ export interface UserState {
   signIn: (email: string, password: string) => Promise<void>;
   signUp: (email: string, password: string, name: string) => Promise<void>;
 }
-const defaultstate: UserState = {
+
+const defaultState: UserState = {
   user: null,
   loading: true,
   signOut: async () => {},
@@ -29,7 +32,7 @@ const defaultstate: UserState = {
 };
 
 // Create the context at the module level
-export const AuthContext = createContext<UserState | null>(defaultstate);
+export const AuthContext = createContext<UserState | null>(defaultState);
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [loading, setLoading] = useState(true);
@@ -59,6 +62,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await account.createEmailSession(email, password);
       const { $id, name } = await account.get();
       setUser({ id: $id, email, name });
+      toast.success("Sign-in successful!");
     } catch (error) {
       console.error("Sign-in error:", error);
     }
@@ -69,27 +73,37 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       await account.deleteSession("current");
       setUser(null);
       setLoading(false);
+      toast.success("Sign-out successful!");
     } catch (error) {
       console.error("Sign-out error:", error);
+      toast.error("Sign-out failed.");
     }
   };
 
   const signUp = async (email: string, password: string, name: string) => {
     try {
       await account.create(ID.unique(), email, password, name);
-    } catch (error) {
-      console.error("Sign-in error:", error);
+      toast.success("Sign-up successful!");
+    } catch (error: any) {
+      if (error instanceof AppwriteException && error.code === 409) {
+        // A user with the same email already exists
+        toast.error("A user with the same email already exists.");
+      } else {
+        console.error("Sign-up error:", error);
+        toast.error("Sign-up failed. Please try again later.");
+      }
     }
   };
-
   return (
     <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
       {children}
+      <ToastContainer /> {/* Add Toastify container */}
     </AuthContext.Provider>
   );
 };
 
 export default AuthProvider;
+
 export const useAuth = () => {
   const authContext = useContext(AuthContext);
 

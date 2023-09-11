@@ -73,7 +73,12 @@ const Login = () => {
               {/* Add a "Forgot your password?" link here if needed */}
             </div>
           </div>
-
+          <span>
+            don't have an account?{" "}
+            <a href="/signup" className="text-blue-600">
+              signup
+            </a>
+          </span>
           <div>
             <button
               type="submit"
