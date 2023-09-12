@@ -60,11 +60,18 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const signIn = async (email: string, password: string) => {
     try {
       await account.createEmailSession(email, password);
+
       const { $id, name } = await account.get();
       setUser({ id: $id, email, name });
       toast.success("Sign-in successful!");
     } catch (error) {
-      console.error("Sign-in error:", error);
+      if (error instanceof AppwriteException && error.code === 401) {
+        // A user with the same email already exists
+        toast.error("Invalid credentials check your email");
+      } else {
+        console.error("Sign-up error:", error);
+        toast.error("Sign-up failed. Please try again later.");
+      }
     }
   };
 
@@ -88,6 +95,10 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       if (error instanceof AppwriteException && error.code === 409) {
         // A user with the same email already exists
         toast.error("A user with the same email already exists.");
+      }
+      if (error instanceof AppwriteException && error.code === 400) {
+        // A user with the same email already exists
+        toast.error("Invalid credentials check your email");
       } else {
         console.error("Sign-up error:", error);
         toast.error("Sign-up failed. Please try again later.");

@@ -1,5 +1,7 @@
+import Layout from "@/components/layout";
 import { useAuth } from "./hooks/authenication";
 import SignUpForm from "./signup";
+import Home from "@/components/home";
 
 export default function index() {
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -15,12 +17,11 @@ export default function index() {
         </div>
       )}
       {user && (
-        <button
-          className="text-white bg-blue-600 p-4 w-50% text-lg"
-          onClick={() => signOut()}
-        >
-          LogOut{" "}
-        </button>
+        <>
+          <Layout>
+            <Home />
+          </Layout>
+        </>
       )}
     </>
   );
