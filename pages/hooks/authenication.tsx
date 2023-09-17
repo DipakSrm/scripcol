@@ -108,7 +108,7 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   return (
     <AuthContext.Provider value={{ user, loading, signUp, signIn, signOut }}>
       {children}
-      <ToastContainer /> {/* Add Toastify container */}
+      {/* Add Toastify container */}
     </AuthContext.Provider>
   );
 };
