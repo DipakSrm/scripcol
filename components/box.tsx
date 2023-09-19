@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
+import { useRouter } from "next/router";
 
 interface Model_Account {
   $id?: string;
@@ -22,7 +23,7 @@ export default function Box({
   BOID,
 }: Model_Account) {
   const [open, setOpen] = useState(false);
-
+  const router = useRouter();
   return (
     <div className="bg-white shadow-md rounded-lg overflow-hidden">
       <div className="p-4">
@@ -35,6 +36,12 @@ export default function Box({
             }`}
           >
             <FontAwesomeIcon icon={faChevronDown} />
+          </button>
+          <button
+            onClick={() => router.push(`/${$id}`)}
+            className="bg-green-300 hover:bg-green-500 text-lg  px-3 py-1 rounded-md "
+          >
+            visit
           </button>
         </div>
         <div className={`mt-2 ${open ? "" : "hidden"}`}>
