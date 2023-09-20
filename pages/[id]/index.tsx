@@ -131,7 +131,9 @@ export default function Page({ params }: { params: { id: string } }) {
       // Update the shares state with the new share data
 
       console.log("Document created:", document);
-      toast.success("Form Submitted Successfully!!");
+      toast.success(
+        "Form Submitted Successfully!! Please Refresh to See Changes"
+      );
     } catch (error) {
       // Display an error toast message
       toast.error("Error submitting share. Please try again later.");
