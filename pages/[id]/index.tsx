@@ -13,6 +13,7 @@ import {
   faBackspace,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/authenication";
+import InAccount from "@/components/individualAccount";
 
 // Import Tailwind CSS styles here
 
@@ -42,8 +43,9 @@ export default function Page({ params }: { params: { id: string } }) {
   const { id } = router.query;
   const [data, setdata] = useState<Model_Account | undefined>();
   const [shares, setShares] = useState<Share[]>([]);
-  const [newShareKey, setNewShareKey] = useState(0);
+
   const [isFormOpen, setIsFormOpen] = useState(false);
+
   const [newShare, setNewShare] = useState({
     name: "",
     units: 10,
@@ -124,12 +126,12 @@ export default function Page({ params }: { params: { id: string } }) {
           Type: newShare.type,
         }
       );
+      console.log("resopnese for share", response);
 
       // Update the shares state with the new share data
 
       console.log("Document created:", document);
       toast.success("Form Submitted Successfully!!");
-      setNewShareKey((prevkey) => prevkey + 1);
     } catch (error) {
       // Display an error toast message
       toast.error("Error submitting share. Please try again later.");
@@ -167,58 +169,13 @@ export default function Page({ params }: { params: { id: string } }) {
 
       getShares();
     }
-  }, [id, newShareKey]);
+  }, [id]);
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row lg:flex-row gap-5 items-center justify-center bg-gray-100">
       <div className="bg-white rounded-lg p-8 shadow-md w-[80%] mx-auto">
         <h1 className="text-3xl font-semibold mb-4">My Account</h1>
-        {data && (
-          <div>
-            <div className="mb-4">
-              <p className="font-bold">Name:</p>
-              <p>{data.Name}</p>
-            </div>
-            <div className="mb-4">
-              <p className="font-bold">Email:</p>
-              <p>{data.Email}</p>
-            </div>
-            <div className="mb-4">
-              <p className="font-bold">Phone Number:</p>
-              <p>{data.PhoneNumber}</p>
-            </div>
-            <div className="mb-4">
-              <p className="font-bold">Account Number:</p>
-              <p>{data.AccountNumber}</p>
-            </div>
-            <div className="mb-4">
-              <p className="font-bold">Client Code:</p>
-              <p>{data.ClientCode}</p>
-            </div>
-            {data.Ref_Id && (
-              <div className="mb-4">
-                <p className="font-bold">Ref Id:</p>
-                <p>{data.Ref_Id}</p>
-              </div>
-            )}
-            <div className="flex flex-col gap-4 md:flex-row justify-between">
-              <button
-                onClick={handleFormOpen}
-                className="bg-blue-500 text-white px-4 py-2 rounded-full  "
-              >
-                <FontAwesomeIcon icon={faEdit} className="mr-2" />
-                Edit
-              </button>
-              <button
-                onClick={() => router.push("/")}
-                className="bg-red-500 text-white px-4 py-2 rounded-full "
-              >
-                <FontAwesomeIcon icon={faBackspace} className="mr-2" />
-                Back
-              </button>
-            </div>
-          </div>
-        )}
+        {data && <InAccount data={data} />}
       </div>
 
       {/* Shares Section */}
