@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../hooks/authenication";
 import InAccount from "@/components/individualAccount";
+import Share from "@/components/shares";
 
 // Import Tailwind CSS styles here
 
@@ -26,6 +27,7 @@ interface Model_Account {
   PhoneNumber: string;
   ClientCode: string;
   Ref_Id?: string;
+  Meroshare_Id: string;
 }
 
 interface Share {
@@ -73,6 +75,7 @@ export default function Page({ params }: { params: { id: string } }) {
             PhoneNumber: response.PhoneNumber || "",
             ClientCode: response.ClientCode || "",
             Ref_Id: response.Ref_Id || "",
+            Meroshare_Id: response.Meroshare_Id || "",
           };
 
           setdata(mappedData);
@@ -190,39 +193,7 @@ export default function Page({ params }: { params: { id: string } }) {
           <FontAwesomeIcon icon={faPlus} className="mr-2" />
           Add Share
         </button>
-        <table className="min-w-full border-collapse border border-gray-300">
-          <thead>
-            <tr className="bg-gray-100">
-              <th className="py-2 px-4 border border-gray-300">Name</th>
-              <th className="py-2 px-4 border border-gray-300">Units</th>
-              <th className="py-2 px-4 border border-gray-300">Rate</th>
-              <th className="py-2 px-4 border border-gray-300">Type</th>
-              <th className="py-2 px-4 border border-gray-300">Total</th>
-            </tr>
-          </thead>
-          <tbody>
-            {shares.map((share) => (
-              <tr key={share.$id}>
-                <td className="py-2 px-4 border border-gray-300">
-                  {share.Name}
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
-                  {share.Units}
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
-                  {share.Rate}
-                </td>
-
-                <td className="py-2 px-4 border border-gray-300">
-                  {share.Type}
-                </td>
-                <td className="py-2 px-4 border border-gray-300">
-                  {share.Rate * share.Units}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Share data={shares} />
       </div>
 
       {/* Add Share Form */}

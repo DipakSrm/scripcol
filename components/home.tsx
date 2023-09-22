@@ -15,6 +15,7 @@ interface Model_Account {
   PhoneNumber: string;
   ClientCode: string;
   Ref_Id?: string;
+  Meroshare_Id: string;
 }
 interface HomeModel {
   data: Model_Account[];
@@ -33,6 +34,7 @@ export default function Home({ data }: HomeModel) {
     PhoneNumber: "",
     ClientCode: "",
     Ref_Id: user?.id,
+    Meroshare_Id: "",
   });
   const [reloadPage, setReloadPage] = useState(false);
 
@@ -67,6 +69,7 @@ export default function Home({ data }: HomeModel) {
           PhoneNumber: Account.PhoneNumber,
           ClientCode: Account.ClientCode,
           Ref_Id: user?.id,
+          Meroshare_Id: Account.Meroshare_Id,
         }
       );
 
@@ -122,7 +125,7 @@ export default function Home({ data }: HomeModel) {
               >
                 <div className="bg-white p-5 rounded-lg w-96">
                   <label className="text-sm font-semibold" htmlFor="name">
-                    Name
+                    Name*
                   </label>
                   <input
                     value={Account.Name}
@@ -134,7 +137,7 @@ export default function Home({ data }: HomeModel) {
                     id="name"
                   />
                   <label className="text-sm font-semibold" htmlFor="boid">
-                    BOID
+                    BOID*
                   </label>
                   <input
                     onChange={handleChange}
@@ -146,7 +149,7 @@ export default function Home({ data }: HomeModel) {
                     value={Account.BOID}
                   />{" "}
                   <label className="text-sm font-semibold" htmlFor="acc_number">
-                    Account Number
+                    Account Number*
                   </label>
                   <input
                     onChange={handleChange}
@@ -157,8 +160,21 @@ export default function Home({ data }: HomeModel) {
                     id="acc_number"
                     value={Account.AccountNumber}
                   />{" "}
+                  <label className="text-sm font-semibold" htmlFor="meroshare">
+                    Meroshare Id*
+                  </label>
+                  <input
+                    onChange={handleChange}
+                    className="text-sm rounded-sm p-2 w-full"
+                    type="text"
+                    placeholder="1301563825621234"
+                    name="Meroshare_Id"
+                    id="meroshare"
+                    value={Account.Meroshare_Id}
+                    maxLength={8}
+                  />{" "}
                   <label className="text-sm font-semibold" htmlFor="email">
-                    Email
+                    Email*
                   </label>
                   <input
                     onChange={handleChange}
@@ -170,7 +186,7 @@ export default function Home({ data }: HomeModel) {
                     id="email"
                   />{" "}
                   <label className="text-sm font-semibold" htmlFor="ph_number">
-                    Phone Number
+                    Phone Number*
                   </label>
                   <input
                     onChange={handleChange}

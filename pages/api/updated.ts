@@ -14,6 +14,7 @@ interface Model_Account {
   PhoneNumber: string;
   ClientCode: string;
   Ref_Id?: string;
+  Meroshare_Id: string;
 }
 
 export default async function handler(req: Model_Account, res: any) {

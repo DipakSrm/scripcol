@@ -13,6 +13,7 @@ interface Model_Account {
   PhoneNumber: string;
   ClientCode: string;
   Ref_Id?: string;
+  Meroshare_Id: string;
 }
 
 interface ModelProps {
@@ -119,6 +120,17 @@ function MyAccount({ data }: ModelProps) {
             name="AccountNumber"
             id="AccountNumber"
           />
+          <label htmlFor="Meroshare_Id" className="text-lg font-semibold">
+            Meroshare Id
+          </label>
+          <input
+            type="text"
+            value={editedData.Meroshare_Id}
+            onChange={handleInputChange}
+            className="my-3 p-2 rounded-md border border-blue-400"
+            name="Meroshare_Id"
+            id="Meroshare_Id"
+          />
           <label htmlFor="PhoneNumber" className="text-lg font-semibold">
             Phone Number
           </label>
@@ -177,6 +189,10 @@ function MyAccount({ data }: ModelProps) {
           <div className="mb-4">
             <p className="font-bold">Account Number:</p>
             <p>{data.AccountNumber}</p>
+          </div>
+          <div className="mb-4">
+            <p className="font-bold">MeroShare _Id:</p>
+            <p>{data.Meroshare_Id}</p>
           </div>
           <div className="mb-4">
             <p className="font-bold">PhoneNumber:</p>

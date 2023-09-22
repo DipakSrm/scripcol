@@ -15,6 +15,7 @@ interface Model_Account {
   PhoneNumber: string;
   ClientCode: string;
   Ref_Id?: string;
+  Meroshare_Id: string;
 }
 
 export default function index() {
