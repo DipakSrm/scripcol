@@ -1,9 +1,12 @@
 import { faCheck, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import DeleteBox from "@/components/deleteBox"
+import { faXmark } from "@fortawesome/free-solid-svg-icons";
 
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { toast } from "react-toastify";
+import axios from "axios";
 interface Model_Account {
   $id?: string;
   Name: string;
@@ -24,6 +27,7 @@ function MyAccount({ data }: ModelProps) {
   console.log("initial id", data.$id);
   const [editMode, setEditMode] = useState(false);
   const [editedData, seteditedData] = useState({ ...data });
+  const [delBox, setdelBox] = useState(false)
   const router = useRouter();
   console.log("editeddata", editedData);
   const handleEdit = () => {
@@ -69,8 +73,42 @@ function MyAccount({ data }: ModelProps) {
       toast.error("An error occurred while updating the document");
     }
   };
+  const openDelete = () => {
+    setdelBox(true)
+    console.log("box open")
+  }
+  const cancelDelete = () => {
+    setdelBox(false)
+  }
+  const confirmDelete = async () => {
+    try {
+      const response = await axios.post('/api/delete', { id: data.$id });
+
+      if (response.status === 200) {
+
+        console.log("success delkete")
+        router.push('/')
+        toast.success(<p className="text-green-500">Successfully Deleted</p>)
+      } else {
+        toast.error('Failed To Delete');
+      }
+    } catch (error) {
+      console.log(error);
+    }
+
+  };
   return (
     <>
+      {delBox && <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg ">
+
+        <div className="bg-white p-3 flex flex-col items-center justify-center  gap-10 lg:w-1/3 lg:h-1/3 rounded-md md:w-1/2 md:h-1/2 w-full h-full">
+          <div className="font-bold text-xl text-red-500">Your Account Will Be Deleted</div>
+          <div className="flex gap-3">
+            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={confirmDelete}>Confirm <FontAwesomeIcon icon={faCheck} /></button>
+            <button className="bg-gray-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={cancelDelete}>Cancel <FontAwesomeIcon icon={faXmark} /></button>
+          </div>
+        </div>
+      </div>}
       {" "}
       {editMode ? (
         // Render the edit form when in edit mode
@@ -172,6 +210,7 @@ function MyAccount({ data }: ModelProps) {
         </form>
       ) : (
         // Render the display view when not in edit mode
+
         <div>
           {/* Display data */}
           <div className="mb-4">
@@ -209,15 +248,22 @@ function MyAccount({ data }: ModelProps) {
             >
               Edit
             </button>
+            <button className="bg-red-500 text-white px-4 py-2 rounded-full" onClick={openDelete}>
+              Delete
+            </button>
             <button
               onClick={() => router.push("/")}
-              className="bg-red-500 text-white px-4 py-2 rounded-full"
+              className="bg-gray-500 text-white px-4 py-2 rounded-full"
             >
               Back
             </button>
           </div>
+
         </div>
-      )}
+
+      )
+
+      }
     </>
   );
 }

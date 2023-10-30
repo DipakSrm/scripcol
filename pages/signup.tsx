@@ -76,6 +76,7 @@ const SignUpForm = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
+            minLength={8}
             required
             className="w-full px-3 py-2 border rounded shadow-sm focus:outline-none focus:border-blue-500"
           />

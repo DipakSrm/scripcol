@@ -11,6 +11,8 @@ interface Model_Account {
   Email: string;
   PhoneNumber: string;
   ClientCode: string;
+  Ref_Id?: string;
+  Meroshare_Id: string;
 }
 
 export default function Box({
