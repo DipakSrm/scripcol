@@ -1,4 +1,4 @@
-import { faCheck, faTimesCircle } from "@fortawesome/free-solid-svg-icons";
+import { faCheck, faEdit, faTimesCircle, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import DeleteBox from "@/components/deleteBox"
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -99,16 +99,17 @@ function MyAccount({ data }: ModelProps) {
   };
   return (
     <>
-      {delBox && <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg ">
+      {delBox &&
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg ">
 
-        <div className="bg-white p-3 flex flex-col items-center justify-center  gap-10 lg:w-1/3 lg:h-1/3 rounded-md md:w-1/2 md:h-1/2 w-full h-full">
-          <div className="font-bold text-xl text-red-500">Your Account Will Be Deleted</div>
-          <div className="flex gap-3">
-            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={confirmDelete}>Confirm <FontAwesomeIcon icon={faCheck} /></button>
-            <button className="bg-gray-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={cancelDelete}>Cancel <FontAwesomeIcon icon={faXmark} /></button>
+          <div className="bg-white p-3 flex flex-col items-center justify-center  gap-10 lg:w-1/3 lg:h-1/3 rounded-md md:w-1/2 md:h-1/2 w-full h-full">
+            <div className="font-bold text-xl text-red-500">Your Account Will Be Deleted</div>
+            <div className="flex gap-3">
+              <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={confirmDelete}>Confirm <FontAwesomeIcon icon={faCheck} /></button>
+              <button className="bg-gray-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={cancelDelete}>Cancel <FontAwesomeIcon icon={faXmark} /></button>
+            </div>
           </div>
-        </div>
-      </div>}
+        </div>}
       {" "}
       {editMode ? (
         // Render the edit form when in edit mode
@@ -244,12 +245,14 @@ function MyAccount({ data }: ModelProps) {
           <div className="flex flex-col gap-4 md:flex-row justify-between">
             <button
               onClick={handleEdit}
-              className="bg-blue-500 text-white px-4 py-2 rounded-full"
+              className="bg-blue-500 text-white px-4 py-2 rounded-full flex justify-center items-center gap-3 but_animation hover:bg-blue-600"
             >
               Edit
+              <FontAwesomeIcon icon={faEdit} />
             </button>
-            <button className="bg-red-500 text-white px-4 py-2 rounded-full" onClick={openDelete}>
+            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex justify-center items-center gap-3 but_animation" onClick={openDelete}>
               Delete
+              <FontAwesomeIcon icon={faTrash} />
             </button>
             <button
               onClick={() => router.push("/")}
