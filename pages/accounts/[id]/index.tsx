@@ -12,7 +12,7 @@ import {
   faList,
   faBackspace,
 } from "@fortawesome/free-solid-svg-icons";
-import { useAuth } from "../hooks/authenication";
+import { useAuth } from "@/pages/hooks/authenication";
 import InAccount from "@/components/individualAccount";
 import Share from "@/components/shares";
 

@@ -33,14 +33,13 @@ export default function Box({
           <h1 className="text-xl font-semibold text-blue-800">{Name}</h1>
           <button
             onClick={() => setOpen(!open)}
-            className={`text-gray-500 hover:text-gray-700 ${
-              open ? "transform rotate-180" : ""
-            }`}
+            className={`text-gray-500 hover:text-gray-700 ${open ? "transform rotate-180" : ""
+              }`}
           >
             <FontAwesomeIcon icon={faChevronDown} />
           </button>
           <button
-            onClick={() => router.push(`/${$id}`)}
+            onClick={() => router.push(`accounts/${$id}`)}
             className="bg-green-300 hover:bg-green-500 text-lg  px-3 py-1 rounded-md "
           >
             visit

@@ -255,7 +255,7 @@ function MyAccount({ data }: ModelProps) {
               <FontAwesomeIcon icon={faTrash} />
             </button>
             <button
-              onClick={() => router.push("/")}
+              onClick={() => router.push("/accounts")}
               className="bg-gray-500 text-white px-4 py-2 rounded-full"
             >
               Back
