@@ -43,7 +43,7 @@ export default function Accounts() {
     };
 
     if (loading) {
-        return <p>Loading...</p>;
+        return <p className='loading'></p>;
     }
 
     return (

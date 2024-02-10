@@ -3,33 +3,32 @@ import { useAuth } from "./hooks/authenication";
 import { database } from "@/utils/appwrite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Query } from "appwrite";
 
-interface Share {
-    $id: string;
-    Name: string;
-    Units: number;
-    Rate: number;
-    Ref_Id: string;
-    Type: string;
-}
+// interface Share {
+//     $id: string;
+//     Name: string;
+//     Units: number;
+//     Rate: number;
+//     Ref_Id: string;
+//     Type: string;
+// }
 
 interface AggregatedShare {
     Name: string;
     TotalUnits: number;
     TotalRate: number;
     Type: string
-    Items: Share[];
+
+    Ref_Id: string;
 }
 
-interface ShareProps {
-    [x: string]: any;
-    data: Share[];
-}
+
 
 export default function Shares() {
     const { user, loading } = useAuth();
     const [data, setData] = useState<AggregatedShare[]>();
-
+    console.log("this is share ", data);
     useEffect(() => {
         if (user) {
             getdata();
@@ -37,48 +36,38 @@ export default function Shares() {
     }, [user]);
 
     const getdata = async () => {
-        try {
-            if (user) {
+        if (user) {
+            try {
                 const response: any = await database.listDocuments(
                     "64fb507e57d794c91f2f",
-                    "64fb511ad635c541e6cf"
-                );
+                    "64fb511ad635c541e6cf", [
+                    Query.equal('User_Id', user.id),
+                ]);
 
-                // Aggregate shares by Name
-                const aggregatedData: AggregatedShare[] = [];
 
-                for (const share of response.documents) {
-                    const existingShare = aggregatedData.find((s) => s.Name === share.Name);
 
-                    if (existingShare) {
-                        // Update existing aggregated share
-                        existingShare.TotalUnits += share.Units;
-                        existingShare.TotalRate = (existingShare.TotalRate + share.Rate) / 2;
-                        existingShare.Items.push(share);
-                    } else {
-                        // Create a new aggregated share entry
-                        const newAggregatedShare: AggregatedShare = {
-                            Name: share.Name,
-                            TotalUnits: share.Units,
-                            TotalRate: share.Rate,
-                            Type: share.Type,
-                            Items: [share],
-                        };
-                        aggregatedData.push(newAggregatedShare);
+                const selectedItem = response.documents.map((i: AggregatedShare) => {
+                    return {
+                        Name: i.Name,
+                        TotalUnits: i.TotalUnits,
+                        Type: i.Type,
+                        Ref_Id: i.Ref_Id
                     }
-                }
-
-                setData(aggregatedData);
-
+                });
+                setData(selectedItem);
+                // Here you can set selectedItem to the state or use it as needed
+            } catch (error) {
+                console.log(error);
+                // Handle errors here, such as showing an error message to the user
             }
-        } catch (error) {
-            console.error(error);
+        } else {
+            <p className="loading"></p>
         }
-    };
-
-    if (loading) {
-        return <p>Loading...</p>;
     }
+
+    // Aggregate shares by Name
+
+
 
     return (
         <>
