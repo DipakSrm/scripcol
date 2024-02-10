@@ -14,7 +14,7 @@ export default function index() {
 
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <p className="loading"></p>;
   }
 
   return (
