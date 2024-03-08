@@ -2,7 +2,7 @@ import { faCheck, faTrash, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { toast } from "react-toastify";
 import axios from 'axios';
-import react from 'react'
+import react, { useEffect } from 'react'
 import { useState } from 'react'
 interface Share {
   $id: string;
@@ -15,9 +15,14 @@ interface Share {
 interface ShareProps {
   data: Share[];
 }
+interface shareData {
+  id: string,
+  name: string
+}
 export default function Share({ data }: ShareProps) {
   const [isboxopen, setisboxopen] = useState(false)
   const [share_id, setshare_id] = useState<string>()
+  
   const handleOpen = (item: string) => {
     setisboxopen(true)
     setshare_id(item)
