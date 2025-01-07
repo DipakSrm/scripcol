@@ -23,6 +23,7 @@ export default function Box({
   PhoneNumber,
   ClientCode,
   BOID,
+  Meroshare_Id
 }: Model_Account) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
@@ -50,6 +51,9 @@ export default function Box({
           <ul className="mt-2">
             <li>
               <span className="text-blue-600">BOID:</span> {BOID}
+            </li>
+               <li>
+              <span className="text-blue-600">Meroshare:</span> {Meroshare_Id}
             </li>
             <li>
               <span className="text-blue-600">Account Number:</span>{" "}
