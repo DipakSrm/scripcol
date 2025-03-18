@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { UserState, useAuth } from "./hooks/authenication";
 import { useRouter } from "next/router";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEye } from "@fortawesome/free-solid-svg-icons";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const { signIn } = useAuth();
   const router = useRouter();
   const handleSubmit = async (e: any) => {
@@ -46,14 +49,15 @@ const Login = () => {
                 placeholder="Email address"
               />
             </div>
-            <div>
+            <div className="relative">
+
               <label htmlFor="password" className="sr-only">
                 Password
               </label>
               <input
                 id="password"
                 name="password"
-                type="password"
+                type={`${showPassword ? 'text' : 'password'}`}
                 autoComplete="current-password"
                 required
                 value={password}
@@ -61,9 +65,14 @@ const Login = () => {
                 className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Password"
               />
-            </div>
-          </div>
 
+            </div>
+
+          </div>
+          <div className="flex gap-2 items-center justify-start ">
+            <label htmlFor="show">Show Password</label>
+            <input type="checkbox" id="show" onChange={() => setShowPassword(prevState => !prevState)} className="w-3" />
+          </div>
           <div className="flex items-center justify-between">
             <div className="flex items-center">
               {/* Add a "Remember me" checkbox here if needed */}
@@ -74,9 +83,9 @@ const Login = () => {
             </div>
           </div>
           <span>
-            don't have an account?{" "}
+            Don't have an account?{" "}
             <a href="/signup" className="text-blue-600">
-              signup
+              SignUp
             </a>
           </span>
           <div>

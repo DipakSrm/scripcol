@@ -7,6 +7,7 @@ export default function Navbar() {
 
   const handleButton = () => {
     signOut();
+    router.push("/");
   };
 
   return (

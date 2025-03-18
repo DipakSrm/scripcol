@@ -3,10 +3,14 @@ import { useAuth } from "./hooks/authenication";
 import { useRouter } from "next/router";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEye } from "@fortawesome/free-regular-svg-icons";
+import { account } from "@/utils/appwrite";
+import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 
 const SignUpForm = () => {
+
   const { signUp } = useAuth();
   const [pass, setpass] = useState(false);
+
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -98,6 +102,12 @@ const SignUpForm = () => {
           className="w-full my-4 py-2 px-4 bg-white border-2 border-blue-500 text-black font-semibold rounded hover:bg-slate-100 "
         >
           Sign In
+        </button>
+        <button
+          onClick={() => account.createOAuth2Session('google')}
+          className="w-full my-4 py-2 px-4 bg-white border-2 border-blue-500 text-black font-semibold rounded hover:bg-slate-100 "
+        >
+          Sign In With Google <FontAwesomeIcon icon={faGoogle} />
         </button>
       </form>
     </div>

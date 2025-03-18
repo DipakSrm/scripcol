@@ -6,6 +6,7 @@ import { Query } from "appwrite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faTrash, faXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import Layout from "@/components/layout";
 
 interface AggregatedShare {
     $id: string
@@ -99,22 +100,23 @@ export default function Shares() {
         }
     }
     //65d23cf39d28e2bd143f
-    return (<> {
-        isboxopen && (
-            <>
-                <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg ">
+    return (<> <Layout>
+        {
+            isboxopen && (
+                <>
+                    <div className="fixed inset-0 flex items-center justify-center backdrop-blur-lg ">
 
-                    <div className="bg-white p-3 flex flex-col items-center justify-center  gap-10 lg:w-1/3 lg:h-1/3 rounded-md md:w-1/2 md:h-1/2 w-full h-full">
-                        <div className="font-bold text-xl text-red-500">Your Share Will Be Deleted</div>
-                        <div className="flex gap-3">
-                            <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2 but_animation" onClick={handleConfirm}>Confirm <FontAwesomeIcon icon={faCheck} /></button>
-                            <button className="bg-gray-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={handleCancel}>Cancel <FontAwesomeIcon icon={faXmark} /></button>
+                        <div className="bg-white p-3 flex flex-col items-center justify-center  gap-10 lg:w-1/3 lg:h-1/3 rounded-md md:w-1/2 md:h-1/2 w-full h-full">
+                            <div className="font-bold text-xl text-red-500">Your Share Will Be Deleted</div>
+                            <div className="flex gap-3">
+                                <button className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2 but_animation" onClick={handleConfirm}>Confirm <FontAwesomeIcon icon={faCheck} /></button>
+                                <button className="bg-gray-500 text-white px-4 py-2 rounded-full flex items-center justify-center gap-2" onClick={handleCancel}>Cancel <FontAwesomeIcon icon={faXmark} /></button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </>
-        )
-    }<table className="min-w-full border-collapse border border-gray-300">
+                </>
+            )
+        }<table className="min-w-full border-collapse border border-gray-300">
             <thead>
                 <tr className="bg-gray-100">
                     <th className="py-2 px-4 border border-gray-300">Name</th>
@@ -147,7 +149,8 @@ export default function Shares() {
                     </tr>
                 ))}
             </tbody>
-        </table></>
+        </table>
+    </Layout></>
 
     );
 }

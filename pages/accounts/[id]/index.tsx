@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, Key } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faEdit,
@@ -15,7 +15,7 @@ import {
 import { useAuth } from "@/pages/hooks/authenication";
 import InAccount from "@/components/individualAccount";
 import Share from "@/components/shares";
-
+import { Share_List } from "@/utils/utils";
 // Import Tailwind CSS styles here
 
 interface Model_Account {
@@ -40,12 +40,12 @@ interface Share {
 }
 
 export default function Page({ params }: { params: { id: string } }) {
+
   const { user } = useAuth();
   const router = useRouter();
   const { id } = router.query;
   const [data, setdata] = useState<Model_Account | undefined>();
   const [shares, setShares] = useState<Share[]>([]);
-  const [share_List, setShare_List] = useState<any>();
   const [isFormOpen, setIsFormOpen] = useState(false);
 
 
@@ -55,15 +55,8 @@ export default function Page({ params }: { params: { id: string } }) {
     rate: 50,
     type: "Primary",
   });
+console.log("Share list",Share_List)
 
-  useEffect(() => {
-    const getShare = async () => {
-      const response = await fetch(`https://the-value-crew.github.io/nepse-api/data/companies.json`)
-      const data = await response.json()
-      setShare_List(data)
-    }
-    getShare()
-  }, []);
 
   useEffect(() => {
     // Ensure that params.id is defined before fetching data
@@ -188,14 +181,14 @@ export default function Page({ params }: { params: { id: string } }) {
   }, [id]);
   //share disabled function
   const sharedisability = (item: any) => {
-    if (share_List && Object.keys(share_List).includes(item)) {
+    if (Share_List && Object.keys(Share_List).includes(item)) {
       return false
     }
     else {
       return true
     }
   }
-  { share_List ? console.log("this is just test", Object.keys(share_List)) : null }
+  { Share_List ? console.log("this is just test", Object.keys(Share_List)) : null }
   return (
     <div className="min-h-screen flex flex-col md:flex-row lg:flex-row gap-5 items-center justify-center bg-gray-100">
       <div className="bg-white rounded-lg p-8 shadow-md w-[80%] mx-auto">
@@ -221,7 +214,7 @@ export default function Page({ params }: { params: { id: string } }) {
         <div className="fixed inset-0 flex items-center justify-center bg-gray-900 bg-opacity-50">
           <div className="bg-white rounded-lg p-8 w-96">
             <h2 className="text-2xl font-semibold mb-4">Add Share</h2>
-            <form onSubmit={handleSubmit} >
+            <form onSubmit={handleSubmit}>
               <div className="mb-4">
                 <label className="block text-sm font-medium text-gray-700">
                   Name
@@ -231,7 +224,6 @@ export default function Page({ params }: { params: { id: string } }) {
                   name="name"
                   value={newShare.name}
                   onChange={handleInputChange}
-
                   list="stocks"
                   className="border w-full px-3 py-2 rounded-md focus:outline-none focus:ring focus:ring-blue-200 uppercase"
                   required
@@ -240,9 +232,16 @@ export default function Page({ params }: { params: { id: string } }) {
                  
                 </datalist> */}
                 <datalist id="stocks">
-                  {Object.keys(share_List).map((key) => (
-                    <option key={key} value={key} />
-                  ))}
+                  {/* Map both keys and names from Share_List */}
+                  {Share_List &&
+                    Object.entries(Share_List).map(
+                      ([key, value]: [string, any], index: number) => (
+                        <React.Fragment key={index}>
+                          <option value={key}>{key}</option>
+                          <option value={key}>{value.name}</option>
+                        </React.Fragment>
+                      )
+                    )}
                 </datalist>
               </div>
               <div className="mb-4">
