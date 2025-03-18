@@ -32,7 +32,7 @@ export default function Accounts() {
                 const response: any = await database.listDocuments(
                     "64fb507e57d794c91f2f",
                     "650579d559b127c0998a",
-                    [Query.equal("Ref_Id", [`${user.id}`]), Query.limit(100)]
+                    [Query.equal("Ref_Id", [`${user.id}`])]
                 );
 console.log(response,"tHIS IS RESPONSE")
                 setData(response.documents); // Update the state with an array of Model_Account
