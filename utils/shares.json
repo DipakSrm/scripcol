@@ -11,6 +11,7 @@
         "id": "140",
         "name": "Machhapuchhre Bank Limited"
     },
+    
     "LSL": {
         "id": "141",
         "name": "Laxmi Sunrise Bank Limited"
@@ -1266,5 +1267,9 @@
     "HRL": {
         "id": "9234",
         "name": "Himalayan Reinsurance Limited"
+    },    },
+    "OMPL": {
+        "id": "9236",
+        "name": "Om Megashree Pharmaceuticals Limited"
     }
 }
