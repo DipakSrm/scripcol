@@ -951,6 +951,11 @@ export const Share_List={
         "name": "Om Megashree Pharmaceuticals Limited",
         "cat": "Manufacturing and Processing"
     
+},
+     "PELTD": {
+        "name": "Pure Energy Limited",
+        "cat": "Others"
+    
 }
 
 }
