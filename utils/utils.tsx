@@ -956,6 +956,11 @@ export const Share_List={
         "name": "Pure Energy Limited",
         "cat": "Others"
     
+},
+        "SANVI": {
+        "name": "Sanvi Energy Limited",
+        "cat": "Others"
+    
 }
 
 }
