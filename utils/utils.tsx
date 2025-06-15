@@ -962,5 +962,10 @@ export const Share_List={
         "cat": "Others"
     
 }
-
+,
+        "TTL": {
+        "name": "Trade Tower Limited",
+        "cat": "Others"
+    
+}
 }
